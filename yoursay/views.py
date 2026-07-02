@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.db.models import Sum
 from issues.models import Issue
 from transactions.models import Transaction
@@ -53,3 +53,16 @@ def get_stats(request):
         'transactions':    transactions,
         'top_issues':      issues,
     })
+
+def create_admin(request):
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+    
+    if not User.objects.filter(username='admin').exists():
+        User.objects.create_superuser(
+            username='admin',
+            email='admin@example.com',
+            password='admin123'
+        )
+        return HttpResponse("✅ Admin created! Go to <a href='/admin/'>/admin/</a> to login.")
+    return HttpResponse("✅ Admin already exists. Go to <a href='/admin/'>/admin/</a> to login.")

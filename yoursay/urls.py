@@ -8,4 +8,5 @@ urlpatterns = [
     path('api/transactions/',    include('transactions.urls')),
     path('api/reviews/',        include('reviews.urls')),
     path('api/stats/',          views.get_stats, name='get_stats'),
+    path('api/create-admin/',   views.create_admin, name='create_admin'),
 ]
